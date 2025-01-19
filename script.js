@@ -1,5 +1,8 @@
-document.querySelectorAll('section').forEach(section => {
-    section.addEventListener('click', () => {
-        alert('Anda mengklik ' + section.id);
+document.querySelectorAll('nav ul li a').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
     });
 });
