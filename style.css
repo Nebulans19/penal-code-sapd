@@ -1,3 +1,4 @@
+/* Reset CSS untuk memastikan tampilannya konsisten */
 * {
     margin: 0;
     padding: 0;
@@ -5,101 +6,83 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f7fc;
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
     color: #333;
-    line-height: 1.6;
 }
 
-header {
-    background: #2c3e50;
+nav {
+    background-color: #333;
     color: white;
-    padding: 20px 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.header .container {
-    width: 80%;
-    margin: 0 auto;
+    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-h1 {
-    font-size: 2rem;
+nav .logo h1 {
+    font-size: 24px;
 }
 
 nav ul {
-    list-style: none;
-    display: flex;
+    list-style-type: none;
 }
 
 nav ul li {
+    display: inline;
     margin: 0 15px;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 1.1rem;
-    transition: color 0.3s ease;
+    font-size: 18px;
 }
 
 nav ul li a:hover {
-    color: #e74c3c;
+    text-decoration: underline;
 }
 
-main {
-    padding: 40px 0;
-    width: 80%;
-    margin: 0 auto;
-}
-
-.section {
-    background: white;
-    margin-bottom: 20px;
+.content {
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
 }
 
-.section:hover {
-    transform: translateY(-5px);
+.content h2 {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.section h2 {
-    font-size: 1.6rem;
-    color: #2c3e50;
-    margin-bottom: 10px;
+.table-of-contents {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 20px;
 }
 
-.section p {
-    font-size: 1.1rem;
-    color: #7f8c8d;
+.table-of-contents li {
+    margin: 5px 0;
+}
+
+.table-of-contents li a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.table-of-contents li a:hover {
+    text-decoration: underline;
 }
 
 footer {
-    text-align: center;
-    padding: 20px;
-    background: #34495e;
+    background-color: #333;
     color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
-/* Responsif untuk tampilan mobile */
-@media (max-width: 768px) {
-    .header .container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    nav ul {
-        display: block;
-    }
-
-    nav ul li {
-        margin: 10px 0;
-    }
+/* Pasal Styling */
+h3 {
+    margin-top: 20px;
+    color: #0066cc;
 }
