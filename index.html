@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penal Code Tool</title>
+    <title>Penal Code Calculator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,38 +11,15 @@
         <h1>Penal Code Calculator</h1>
     </header>
     <main>
-        <!-- Search Bar -->
-        <section class="search-section">
-            <input type="text" id="searchInput" placeholder="Search by code or description">
-            <button onclick="searchPenalCode()">Search</button>
-        </section>
+        <!-- Search Section -->
+        <div class="search-section">
+            <input type="text" id="searchInput" placeholder="Search Penal Code..." oninput="filterPenalList()">
+        </div>
 
-        <!-- Calculator Section -->
-        <section class="calculator">
-            <h2>Penalty Calculator</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Code</th>
-                        <th>Description</th>
-                        <th>Jail Time</th>
-                        <th>Fine</th>
-                        <th>Bail</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="selectedPenalties"></tbody>
-            </table>
-            <p id="summaryResult">Total Jail Time: 0 days | Fine: $0 | Bail: $0</p>
-            <pre id="commandOutput">Command: /arrest [PlayerID] 0 0 0</pre>
-            <button onclick="copyCommand()">Copy Command</button>
-            <button onclick="clearCalculator()">Clear Calculator</button>
-        </section>
-
-        <!-- Penal Code List Section -->
-        <section class="penal-list">
-            <h2>Available Penal Codes</h2>
-            <table>
+        <!-- Penal List and Calculator Section -->
+        <div class="penal-list">
+            <h2>Penal Code List</h2>
+            <table id="penalList">
                 <thead>
                     <tr>
                         <th>Code</th>
@@ -53,9 +30,28 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="penalList"></tbody>
+                <tbody></tbody>
             </table>
-        </section>
+        </div>
+
+        <div class="calculator">
+            <h2>Penal Code Calculator</h2>
+            <table id="selectedPenalties">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                        <th>Jail Time</th>
+                        <th>Fine</th>
+                        <th>Bail</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div id="summaryResult"></div>
+            <div id="commandOutput"></div>
+        </div>
     </main>
     <script src="script.js"></script>
 </body>
