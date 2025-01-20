@@ -8,14 +8,38 @@
 </head>
 <body>
     <header>
-        <h1>Penal Code Tool</h1>
+        <h1>Penal Code Calculator</h1>
     </header>
     <main>
-        <div class="search">
-            <input type="text" id="searchInput" placeholder="Enter penal code(s), e.g., 1P, 8A">
-            <button onclick="searchPenalCode()">Search</button>
-        </div>
-        <div id="results"></div>
+        <section class="calculator">
+            <div class="search">
+                <input type="text" id="searchInput" placeholder="Search by code or description, e.g., 1P, theft">
+                <button onclick="searchPenalCode()">Search</button>
+            </div>
+            <div id="results"></div>
+        </section>
+
+        <section class="summary">
+            <h2>Penalty Calculator</h2>
+            <p id="summaryResult">Total Jail Time: 0 days | Fine: $0 | Bail: $0</p>
+            <button onclick="clearSummary()">Clear Calculator</button>
+        </section>
+
+        <section class="penal-list">
+            <h2>Available Penal Codes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                        <th>Jail Time</th>
+                        <th>Fine</th>
+                        <th>Bail</th>
+                    </tr>
+                </thead>
+                <tbody id="penalList"></tbody>
+            </table>
+        </section>
     </main>
     <script src="script.js"></script>
 </body>
