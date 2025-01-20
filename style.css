@@ -1,12 +1,14 @@
+/* Tulisan "by Nebulans" pindah ke kiri */
 .credits {
     display: block;
     font-size: 12px;
-    text-align: right;
+    text-align: left;
     color: #555;
     margin-top: -10px;
-    margin-right: 10px;
+    margin-left: 10px;
 }
 
+/* Tombol gaya umum */
 button {
     background-color: #28a745;
     color: white;
@@ -21,6 +23,7 @@ button:hover {
     background-color: #218838;
 }
 
+/* Tombol untuk hapus */
 button.clear {
     background-color: #FF5733;
 }
