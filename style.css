@@ -1,61 +1,29 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
+.penal-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-header {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-}
-
-main {
-    padding: 20px;
-    max-width: 800px;
-    margin: 20px auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.search {
-    margin-bottom: 20px;
-}
-
-.search input {
-    width: calc(100% - 100px);
-    padding: 10px;
-    margin-right: 10px;
+.penal-list th, .penal-list td {
     border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 8px;
+    text-align: left;
 }
 
-.search button {
-    padding: 10px 20px;
-    background-color: #007BFF;
+.penal-list th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.summary button {
+    background-color: #FF5733;
     color: white;
+    padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-.search button:hover {
-    background-color: #0056b3;
-}
-
-.result {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.result pre {
-    background: #f9f9f9;
-    padding: 10px;
-    border-radius: 4px;
-    overflow-x: auto;
+.summary button:hover {
+    background-color: #C70039;
 }
