@@ -66,7 +66,10 @@ function updateCalculator() {
                     <td>${displayJailTime}</td>
                     <td>${fine !== "-" ? `$${fine}` : "-"}</td>
                     <td>${bail !== "-" ? `$${bail}` : "-"}</td>
-                    <td><button onclick="removeFromCalculator('${code}')">Remove</button></td>
+                    <td>
+                        <button onclick="copySinglePenalty('${code}')">Copy</button>
+                        <button onclick="removeFromCalculator('${code}')">Remove</button>
+                    </td>
                 </tr>
             `;
         })
@@ -76,19 +79,17 @@ function updateCalculator() {
     commandOutput.textContent = `Command: /arrest [PlayerID] ${summary.jailTime} ${summary.fine} ${summary.bail}`;
 }
 
+// Fungsi untuk menyalin satu pasal
+function copySinglePenalty(code) {
+    const penalty = penalData[code];
+    const text = `${code}. ${penalty.name}`;
+    navigator.clipboard.writeText(text).then(() => alert("Penalty copied!"));
+}
+
 // Fungsi untuk menyalin command
 function copyCommand() {
     const command = document.getElementById("commandOutput").textContent;
     navigator.clipboard.writeText(command).then(() => alert("Command copied!"));
-}
-
-// Fungsi untuk menyalin daftar pasal
-function copyPenalList() {
-    const list = selectedPenalties
-        .map(code => `${code}. ${penalData[code].name}`)
-        .join("\n");
-
-    navigator.clipboard.writeText(list).then(() => alert("Penal list copied!"));
 }
 
 // Fungsi menghapus pasal dari kalkulator
