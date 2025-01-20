@@ -1,78 +1,63 @@
-// Data Penal Code
 const penalData = {
-    "1P": { name: "Theft", jailTime: 30, fine: 500, bail: 1000 },
-    "1C": { name: "Assault", jailTime: 60, fine: 1000, bail: 2000 },
-    "8A": { name: "Drug Trafficking", jailTime: 120, fine: 5000, bail: 10000 },
-    "2B": { name: "Fraud", jailTime: "-", fine: 3000, bail: 5000 },
-    "3D": { name: "Arson", jailTime: "-", fine: "-", bail: 15000 },
-    // Tambahkan data lainnya jika diperlukan
+    "1P": { name: "Theft", jailTime: "30", fine: "500", bail: "1000" },
+    "2P": { name: "Assault", jailTime: "60", fine: "700", bail: "1500" },
+    "3P": { name: "Vandalism", jailTime: "-", fine: "300", bail: "-" },
+    "4P": { name: "Jaywalking", jailTime: "-", fine: "-", bail: "-" },
 };
 
-// Penyimpanan data penal yang dipilih
 let selectedPenalties = [];
-let summary = { jailTime: 0, fine: 0, bail: 0 };
 
-// Fungsi untuk menampilkan daftar pasal
-function displayPenalList() {
-    const penalList = document.getElementById("penalList");
-    penalList.innerHTML = "";
-
-    Object.keys(penalData).forEach(code => {
-        const { name, jailTime, fine, bail } = penalData[code];
-        penalList.innerHTML += `
+// Populate Penal List Table
+function populatePenalList() {
+    const penalListTable = document.getElementById("penalList").querySelector("tbody");
+    penalListTable.innerHTML = Object.entries(penalData)
+        .map(([code, { name, jailTime, fine, bail }]) => `
             <tr>
                 <td>${code}</td>
                 <td>${name}</td>
                 <td>${jailTime}</td>
                 <td>$${fine}</td>
                 <td>$${bail}</td>
-                <td><button onclick="addToCalculator('${code}')">Add</button></td>
+                <td>
+                    <button onclick="addToCalculator('${code}')">Add</button>
+                </td>
             </tr>
-        `;
-    });
+        `)
+        .join("");
 }
 
-// Fungsi menambahkan pasal ke kalkulator
+// Add Penal Code to Calculator
 function addToCalculator(code) {
-    if (selectedPenalties.includes(code)) return;
-
-    selectedPenalties.push(code);
-    const { jailTime, fine, bail } = penalData[code];
-
-    // Tangani kasus jailTime "-" dengan kondisi "ticket" atau "tag"
-    let adjustedJailTime = jailTime;
-    if (jailTime === "-") {
-        if (fine !== "-") {
-            adjustedJailTime = "ticket";
-        } else {
-            adjustedJailTime = "tag";
-        }
+    if (!selectedPenalties.includes(code)) {
+        selectedPenalties.push(code);
+        updateCalculator();
     }
+}
 
-    summary.jailTime += adjustedJailTime === "ticket" || adjustedJailTime === "tag" ? 0 : jailTime;
-    summary.fine += fine === "-" ? 0 : fine;
-    summary.bail += bail === "-" ? 0 : bail;
-
+// Remove Penal Code from Calculator
+function removeFromCalculator(code) {
+    selectedPenalties = selectedPenalties.filter(item => item !== code);
     updateCalculator();
 }
 
-// Fungsi memperbarui tampilan kalkulator
+// Copy Penal Code
+function copyPenalty(code, name) {
+    navigator.clipboard.writeText(`${code}. ${name}`);
+    alert(`Copied: ${code}. ${name}`);
+}
+
+// Update Calculator
 function updateCalculator() {
-    const selectedPenaltiesTable = document.getElementById("selectedPenalties");
+    const selectedPenaltiesTable = document.getElementById("selectedPenalties").querySelector("tbody");
     const commandOutput = document.getElementById("commandOutput");
 
     selectedPenaltiesTable.innerHTML = selectedPenalties
         .map(code => {
             const { name, jailTime, fine, bail } = penalData[code];
 
-            // Tangani kasus jailTime "-" dengan kondisi "ticket" atau "tag"
             let adjustedJailTime = jailTime;
             if (jailTime === "-") {
-                if (fine !== "-") {
-                    adjustedJailTime = `<span class="ticket">TICKET</span>`;
-                } else {
-                    adjustedJailTime = `<span class="tag">TAG</span>`;
-                }
+                adjustedJailTime = fine !== "-" ? `<span class="ticket">TICKET</span>` : `<span class="tag">TAG</span>`;
             }
 
             return `
@@ -83,13 +68,24 @@ function updateCalculator() {
                     <td>$${fine}</td>
                     <td>$${bail}</td>
                     <td>
-                        <button onclick="copyPenalty('${code}', '${name}')">Copy</button>
-                        <button onclick="removeFromCalculator('${code}')">Remove</button>
+                        <button class="copy" onclick="copyPenalty('${code}', '${name}')">Copy</button>
+                        <button class="remove" onclick="removeFromCalculator('${code}')">Remove</button>
                     </td>
                 </tr>
             `;
         })
         .join("");
+
+    const summary = selectedPenalties.reduce(
+        (acc, code) => {
+            const { jailTime, fine, bail } = penalData[code];
+            acc.jailTime += jailTime !== "-" ? parseInt(jailTime) : 0;
+            acc.fine += fine !== "-" ? parseInt(fine) : 0;
+            acc.bail += bail !== "-" ? parseInt(bail) : 0;
+            return acc;
+        },
+        { jailTime: 0, fine: 0, bail: 0 }
+    );
 
     document.getElementById("summaryResult").innerHTML = `
         <div class="summary">
@@ -100,3 +96,37 @@ function updateCalculator() {
 
     commandOutput.textContent = `Command: /arrest [PlayerID] ${summary.jailTime} ${summary.fine} ${summary.bail}`;
 }
+
+// Clear Calculator
+function clearCalculator() {
+    selectedPenalties = [];
+    updateCalculator();
+}
+
+// Filter Penal List
+function filterPenalList() {
+    const searchValue = document.getElementById("searchInput").value.toLowerCase();
+    const penalListTable = document.getElementById("penalList").querySelector("tbody");
+
+    penalListTable.innerHTML = Object.entries(penalData)
+        .filter(([code, { name }]) => code.toLowerCase().includes(searchValue) || name.toLowerCase().includes(searchValue))
+        .map(([code, { name, jailTime, fine, bail }]) => `
+            <tr>
+                <td>${code}</td>
+                <td>${name}</td>
+                <td>${jailTime}</td>
+                <td>$${fine}</td>
+                <td>$${bail}</td>
+                <td>
+                    <button onclick="addToCalculator('${code}')">Add</button>
+                </td>
+            </tr>
+        `)
+        .join("");
+}
+
+// Initial Population
+document.addEventListener("DOMContentLoaded", () => {
+    populatePenalList();
+    updateCalculator();
+});
