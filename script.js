@@ -3,16 +3,16 @@ const penalData = {
     "1P": { name: "Theft", jailTime: 30, fine: 500, bail: 1000 },
     "1C": { name: "Assault", jailTime: 60, fine: 1000, bail: 2000 },
     "8A": { name: "Drug Trafficking", jailTime: 120, fine: 5000, bail: 10000 },
-    "2B": { name: "Fraud", jailTime: "-", fine: 3000, bail: "-" },
-    "3D": { name: "Arson", jailTime: "-", fine: "-", bail: "-" },
-    // Tambahkan data lain di sini
+    "2B": { name: "Fraud", jailTime: "-", fine: 3000, bail: 5000 },
+    "3D": { name: "Arson", jailTime: "-", fine: "-", bail: 15000 },
+    // Tambahkan data lainnya jika diperlukan
 };
 
 // Penyimpanan data penal yang dipilih
 let selectedPenalties = [];
 let summary = { jailTime: 0, fine: 0, bail: 0 };
 
-// Fungsi menampilkan daftar pasal
+// Fungsi untuk menampilkan daftar pasal
 function displayPenalList() {
     const penalList = document.getElementById("penalList");
     penalList.innerHTML = "";
@@ -24,32 +24,39 @@ function displayPenalList() {
                 <td>${code}</td>
                 <td>${name}</td>
                 <td>${jailTime}</td>
-                <td>${fine}</td>
-                <td>${bail}</td>
+                <td>$${fine}</td>
+                <td>$${bail}</td>
                 <td><button onclick="addToCalculator('${code}')">Add</button></td>
             </tr>
         `;
     });
 }
 
-// Tambahkan penal code ke kalkulator
+// Fungsi menambahkan pasal ke kalkulator
 function addToCalculator(code) {
     if (selectedPenalties.includes(code)) return;
 
     selectedPenalties.push(code);
-    const penalty = penalData[code];
-    const jailTime = penalty.jailTime === "-" ? (penalty.fine !== "-" ? "ticket" : "tag") : penalty.jailTime;
+    const { jailTime, fine, bail } = penalData[code];
 
-    if (jailTime !== "ticket" && jailTime !== "tag") {
-        summary.jailTime += jailTime;
+    // Tangani kasus jailTime "-" dengan kondisi "ticket" atau "tag"
+    let adjustedJailTime = jailTime;
+    if (jailTime === "-") {
+        if (fine !== "-") {
+            adjustedJailTime = "ticket";
+        } else {
+            adjustedJailTime = "tag";
+        }
     }
-    if (penalty.fine !== "-") summary.fine += penalty.fine;
-    if (penalty.bail !== "-") summary.bail += penalty.bail;
+
+    summary.jailTime += adjustedJailTime === "ticket" || adjustedJailTime === "tag" ? 0 : jailTime;
+    summary.fine += fine === "-" ? 0 : fine;
+    summary.bail += bail === "-" ? 0 : bail;
 
     updateCalculator();
 }
 
-// Perbarui tampilan kalkulator
+// Fungsi memperbarui tampilan kalkulator
 function updateCalculator() {
     const selectedPenaltiesTable = document.getElementById("selectedPenalties");
     const commandOutput = document.getElementById("commandOutput");
@@ -57,17 +64,26 @@ function updateCalculator() {
     selectedPenaltiesTable.innerHTML = selectedPenalties
         .map(code => {
             const { name, jailTime, fine, bail } = penalData[code];
-            const displayJailTime = jailTime === "-" ? (fine !== "-" ? "ticket" : "tag") : `${jailTime} days`;
+
+            // Tangani kasus jailTime "-" dengan kondisi "ticket" atau "tag"
+            let adjustedJailTime = jailTime;
+            if (jailTime === "-") {
+                if (fine !== "-") {
+                    adjustedJailTime = "ticket";
+                } else {
+                    adjustedJailTime = "tag";
+                }
+            }
 
             return `
                 <tr>
                     <td>${code}</td>
                     <td>${name}</td>
-                    <td>${displayJailTime}</td>
-                    <td>${fine !== "-" ? `$${fine}` : "-"}</td>
-                    <td>${bail !== "-" ? `$${bail}` : "-"}</td>
+                    <td>${adjustedJailTime}</td>
+                    <td>$${fine}</td>
+                    <td>$${bail}</td>
                     <td>
-                        <button onclick="copySinglePenalty('${code}')">Copy</button>
+                        <button onclick="copyPenalty('${code}', '${name}')">Copy</button>
                         <button onclick="removeFromCalculator('${code}')">Remove</button>
                     </td>
                 </tr>
@@ -79,43 +95,50 @@ function updateCalculator() {
     commandOutput.textContent = `Command: /arrest [PlayerID] ${summary.jailTime} ${summary.fine} ${summary.bail}`;
 }
 
-// Fungsi untuk menyalin satu pasal
-function copySinglePenalty(code) {
-    const penalty = penalData[code];
-    const text = `${code}. ${penalty.name}`;
-    navigator.clipboard.writeText(text).then(() => alert("Penalty copied!"));
-}
-
-// Fungsi untuk menyalin command
-function copyCommand() {
-    const command = document.getElementById("commandOutput").textContent;
-    navigator.clipboard.writeText(command).then(() => alert("Command copied!"));
-}
-
 // Fungsi menghapus pasal dari kalkulator
 function removeFromCalculator(code) {
     selectedPenalties = selectedPenalties.filter(item => item !== code);
 
-    const penalty = penalData[code];
-    const jailTime = penalty.jailTime === "-" ? 0 : penalty.jailTime;
+    const { jailTime, fine, bail } = penalData[code];
 
-    if (jailTime !== "ticket" && jailTime !== "tag") {
-        summary.jailTime -= jailTime;
+    let adjustedJailTime = jailTime;
+    if (jailTime === "-") {
+        if (fine !== "-") {
+            adjustedJailTime = "ticket";
+        } else {
+            adjustedJailTime = "tag";
+        }
     }
-    if (penalty.fine !== "-") summary.fine -= penalty.fine;
-    if (penalty.bail !== "-") summary.bail -= penalty.bail;
+
+    summary.jailTime -= adjustedJailTime === "ticket" || adjustedJailTime === "tag" ? 0 : jailTime;
+    summary.fine -= fine === "-" ? 0 : fine;
+    summary.bail -= bail === "-" ? 0 : bail;
 
     updateCalculator();
 }
 
-// Fungsi untuk membersihkan kalkulator
+// Fungsi menghapus semua pasal dari kalkulator
 function clearCalculator() {
     selectedPenalties = [];
     summary = { jailTime: 0, fine: 0, bail: 0 };
     updateCalculator();
 }
 
-// Fungsi untuk mencari penal code
+// Fungsi menyalin command
+function copyCommand() {
+    const commandOutput = document.getElementById("commandOutput");
+    navigator.clipboard.writeText(commandOutput.textContent);
+    alert("Command copied!");
+}
+
+// Fungsi menyalin pasal
+function copyPenalty(code, name) {
+    const textToCopy = `${code}. ${name}`;
+    navigator.clipboard.writeText(textToCopy);
+    alert("Penalty copied: " + textToCopy);
+}
+
+// Fungsi pencarian pasal
 function searchPenalCode() {
     const input = document.getElementById("searchInput").value.toLowerCase();
     const penalList = document.getElementById("penalList");
@@ -130,13 +153,13 @@ function searchPenalCode() {
                     <td>${code}</td>
                     <td>${name}</td>
                     <td>${jailTime}</td>
-                    <td>${fine}</td>
-                    <td>${bail}</td>
+                    <td>$${fine}</td>
+                    <td>$${bail}</td>
                     <td><button onclick="addToCalculator('${code}')">Add</button></td>
                 </tr>
             `;
         });
 }
 
-// Inisialisasi
+// Tampilkan daftar pasal saat halaman dimuat
 document.addEventListener("DOMContentLoaded", displayPenalList);
