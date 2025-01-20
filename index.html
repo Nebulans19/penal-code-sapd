@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BB Code Generator</title>
+    <title>Penal Code Tool</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>BB Code Generator</h1>
-        <textarea id="inputText" placeholder="Tulis teks di sini..."></textarea>
-        <button onclick="generateBBCode()">Convert to BBCode</button>
-        <textarea id="outputText" placeholder="BBCode hasil konversi..."></textarea>
-    </div>
+    <header>
+        <h1>Penal Code Tool</h1>
+    </header>
+    <main>
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Enter penal code(s), e.g., 1P, 8A">
+            <button onclick="searchPenalCode()">Search</button>
+        </div>
+        <div id="results"></div>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
