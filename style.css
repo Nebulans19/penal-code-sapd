@@ -1,14 +1,68 @@
-/* Tulisan "by Nebulans" pindah ke kiri */
-.credits {
-    display: block;
-    font-size: 12px;
-    text-align: left;
-    color: #555;
-    margin-top: -10px;
-    margin-left: 10px;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
 }
 
-/* Tombol gaya umum */
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-section {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.search-section input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.search-section button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-section button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
 button {
     background-color: #28a745;
     color: white;
@@ -16,14 +70,12 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-right: 5px;
 }
 
 button:hover {
     background-color: #218838;
 }
 
-/* Tombol untuk hapus */
 button.clear {
     background-color: #FF5733;
 }
@@ -38,18 +90,4 @@ pre {
     border-radius: 4px;
     overflow-x: auto;
     margin-top: 10px;
-}
-
-/* Gaya untuk tulisan by Nebulans */
-footer {
-    text-align: center;
-    margin-top: 20px;
-    padding: 10px 0;
-    background-color: #f9f9f9;
-    font-size: 12px;
-    color: #555;
-}
-
-footer .credits {
-    display: block;
 }
