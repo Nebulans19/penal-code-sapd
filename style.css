@@ -1,29 +1,93 @@
-.penal-list table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
 }
 
-.penal-list th, .penal-list td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-.penal-list th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-}
-
-.summary button {
-    background-color: #FF5733;
+header {
+    background-color: #333;
     color: white;
-    padding: 10px 15px;
+    text-align: center;
+    padding: 10px 0;
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-section {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.search-section input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.search-section button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-.summary button:hover {
+.search-section button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+button.clear {
+    background-color: #FF5733;
+}
+
+button.clear:hover {
     background-color: #C70039;
+}
+
+pre {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin-top: 10px;
 }
